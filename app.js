@@ -4,11 +4,11 @@ const { useState, useEffect, useRef } = React;
 function TemplateSelector({ selected, setSelected }) {
   return (
     <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-      <button onClick={() => setSelected('template1')}
+      <button  className = "button" onClick={() => setSelected('template1')}
         style={{ backgroundColor: selected === 'template1' ? '#007bff' : '#ccc' }}>
         Template 1
       </button>
-      <button onClick={() => setSelected('template2')}
+      <button  className = "button" onClick={() => setSelected('template2')}
         style={{ backgroundColor: selected === 'template2' ? '#007bff' : '#ccc' }}>
         Template 2
       </button>
@@ -67,11 +67,11 @@ function FormSection({ formData, setFormData }) {
           <input value={edu.degree} onChange={e => handleArrayChange(idx, 'degree', e.target.value, 'education')} placeholder="Degree" style={inputStyle} />
           <input value={edu.year} onChange={e => handleArrayChange(idx, 'year', e.target.value, 'education')} placeholder="Year" style={inputStyle} />
           <input value={edu.marks} onChange={e => handleArrayChange(idx, 'marks', e.target.value, 'education')} placeholder="Marks (e.g. 86%)" style={inputStyle} />
-          <button onClick={() => deleteField('education', idx)}>Delete</button>
+          <button className = "button" onClick={() => deleteField('education', idx)}>Delete</button>
 
 		</div>
       ))}
-      <button onClick={() => addField('education', { school: '', degree: '', year: '', marks: '' })}>+ Add Education</button>
+      <button className = "button" onClick={() => addField('education', { school: '', degree: '', year: '', marks: '' })}>+ Add Education</button>
 
       <h3>Experience</h3>
       {formData.experience.map((exp, idx) => (
@@ -80,25 +80,25 @@ function FormSection({ formData, setFormData }) {
           <input value={exp.role} onChange={e => handleArrayChange(idx, 'role', e.target.value, 'experience')} placeholder="Role" style={inputStyle} />
           <input value={exp.duration} onChange={e => handleArrayChange(idx, 'duration', e.target.value, 'experience')} placeholder="Duration" style={inputStyle} />
           <textarea value={exp.description} onChange={e => handleArrayChange(idx, 'description', e.target.value, 'experience')} placeholder="Description (enter for bullets)" style={inputStyle} />
-		  <button onClick={() => deleteField('experience', idx)}>Delete</button>
+		  <button className = "button"  onClick={() => deleteField('experience', idx)}>Delete</button>
 		</div>
       ))}
-      <button onClick={() => addField('experience', { company: '', role: '', duration: '', description: '' })}>+ Add Experience</button>
+      <button  className = "button" onClick={() => addField('experience', { company: '', role: '', duration: '', description: '' })}>+ Add Experience</button>
 
       <h3>Projects</h3>
       {formData.projects.map((proj, idx) => (
         <div key={idx}>
           <input value={proj.name} onChange={e => handleArrayChange(idx, 'name', e.target.value, 'projects')} placeholder="Project Name" style={inputStyle} />
           <textarea value={proj.description} onChange={e => handleArrayChange(idx, 'description', e.target.value, 'projects')} placeholder="Description (enter for bullets)" style={inputStyle} />
-          <button onClick={() => deleteField('projects', idx)}>Delete</button>
+          <button  className = "button" onClick={() => deleteField('projects', idx)}>Delete</button>
 		</div>
       ))}
-      <button onClick={() => addField('projects', { name: '', description: '' })}>+ Add Project</button>
+      <button  className = "button" onClick={() => addField('projects', { name: '', description: '' })}>+ Add Project</button>
 
       <br />
 	  <br/>
-      <button onClick={() => localStorage.setItem('resumeDraft', JSON.stringify(formData))}>Save Draft</button>
-      <button onClick={() => {
+      <button  className = "button" onClick={() => localStorage.setItem('resumeDraft', JSON.stringify(formData))}>Save Draft</button>
+      <button  className = "button" onClick={() => {
         localStorage.removeItem('resumeDraft');
         setFormData({
           name: '', email: '', phone: '', profile: '', education: [{ degree: '', school: '', year: '', marks: '' }],
@@ -123,7 +123,7 @@ function DownloadButton({ targetRef }) {
   };
 
   return (
-    <button onClick={downloadPDF} style={{ marginTop: '10px', padding: '10px', backgroundColor: '#28a745', color: '#fff' }}>
+    <button  className = "button" onClick={downloadPDF} style={{ marginTop: '10px', padding: '10px', backgroundColor: '#28a745', color: '#fff' }}>
       Download as PDF
     </button>
   );
@@ -135,9 +135,9 @@ function ResumeTemplate1({ formData }) {
 
   return (
     <div style={{ padding: '10px' }}>
-      <div ref={ref} style={{ background: '#fff', padding: '20px', border: '1px solid #ccc', width: '800px', margin: 'auto' }}>
+      <div ref={ref} className="a4-page">
         <h1 style={{ textAlign: 'center' }}>{name}</h1>
-        <p style={{ textAlign: 'center' }}>{email} | {phone}</p>
+		{email &&<><p style={{ textAlign: 'center' }}>{email} | {phone}</p></>}
         {profile && <><h3>Profile</h3><p>{profile}</p></>}
         {education.some(e => e.school || e.degree || e.year || e.marks)&& (<><h3>Education</h3>{education.map((e, i) => <p key={i}>{e.degree} at {e.school} ({e.year}) [{e.marks}]</p>)}</>)}
         {experience.some(e => e.role || e.company || e.duration || e.description) && (<><h3>Experience</h3>{experience.map((e, i) => <div key={i}><b>{e.role}</b> at {e.company} ({e.duration})<ul>{(e.description || '').split('\n').map((line, j) => <li key={j}>{line}</li>)}</ul></div>)}</>)}
@@ -156,41 +156,63 @@ function ResumeTemplate2({ formData }) {
 
   return (
     <div style={{ padding: '10px' }}>
-      <div ref={ref} style={{ background: '#f9f9f9', display: 'flex', width: '800px', margin: 'auto', border: '1px solid #ccc' }}>
-        <div style={{ width: '30%', backgroundColor: '#333', color: '#fff', padding: '10px' }}>
-          <h2>{name}</h2>
-          <p>{email}<br />{phone}</p>
-	     {skills &&( <> <h4>Skills</h4><p>{skills}</p> </>)}
-		 {languages &&( <> <h4>Languages</h4><p>{languages}</p> </>)}
+      <div ref={ref} className="a4-page">
+        <div style={{ display: 'flex', height: '100%' }}>
+          {/* Left Sidebar */}
+          <div style={{ width: '40%', backgroundColor: '#333', color: '#fff', padding: '10px', boxSizing: 'border-box' }}>
+            <h2>{name}</h2>
+            <p>{email}<br />{phone}</p>
+            {skills && (<><h4>Skills</h4><p>{skills}</p></>)}
+            {languages && (<><h4>Languages</h4><p>{languages}</p></>)}
+          </div>
+
+          {/* Right Content */}
+          <div style={{ width: '70%', padding: '10px', boxSizing: 'border-box', overflowY: 'auto' }}>
+            {profile && (<><h3>Profile</h3><p>{profile}</p></>)}
+
+            {education.some(e => e.school || e.degree || e.year || e.marks) && (
+              <>
+                <h3>Education</h3>
+                {education.map((edu, idx) => (
+                  (edu.school || edu.degree || edu.year || edu.marks) && (
+                    <p key={idx}>{edu.degree} at {edu.school} ({edu.year}) - {edu.marks}</p>
+                  )
+                ))}
+              </>
+            )}
+
+            {experience.some(e => e.role || e.company || e.duration || e.description) && (
+              <>
+                <h3>Experience</h3>
+                {experience.map((e, i) => (
+                  <div key={i}>
+                    <b>{e.role}</b> at {e.company} ({e.duration})
+                    <ul>{(e.description || '').split('\n').map((line, j) => <li key={j}>{line}</li>)}</ul>
+                  </div>
+                ))}
+              </>
+            )}
+
+            {projects.some(p => p.name || p.description) && (
+              <>
+                <h3>Projects</h3>
+                {projects.map((p, i) => (
+                  <div key={i}>
+                    <b>{p.name}</b>
+                    <ul>{(p.description || '').split('\n').map((line, j) => <li key={j}>{line}</li>)}</ul>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
         </div>
-        <div style={{ width: '70%', padding: '10px' }}>
-			{profile &&(<> <h3>Profile</h3><p>{profile}</p> </>)}
-          {education.some(e => e.school || e.degree || e.year || e.marks) && (
-			  <>
-				<h3>Education</h3>
-				{education.map((edu, idx) => (
-				  (edu.school || edu.degree || edu.year || edu.marks) && (
-					<p key={idx}>{edu.degree} at {edu.school} ({edu.year}) - {edu.marks}</p>
-				  )
-				))}
-			  </>
-			)}
-		  {experience.some(e => e.role || e.company || e.duration || e.description) && (
-			  <>
-				<h3>Experience</h3>{experience.map((e, i) => <div key={i}><b>{e.role}</b> at {e.company} ({e.duration})<ul>{(e.description || '').split('\n').map((line, j) => <li key={j}>{line}</li>)}</ul></div>)}
-			  </>
-		  )}
-		  {projects.some(p => p.name || p.description) && (
-			  <>
-				<h3>Projects</h3>{projects.map((p, i) => <div key={i}><b>{p.name}</b><ul>{(p.description || '').split('\n').map((line, j) => <li key={j}>{line}</li>)}</ul></div>)}
-			  </>
-		  )}
-		</div>
       </div>
+
       <DownloadButton targetRef={ref} />
     </div>
   );
 }
+
 
 function App() {
   const [selectedTemplate, setSelectedTemplate] = useState('template1');

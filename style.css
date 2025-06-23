@@ -37,22 +37,24 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+.button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #ccc;
   cursor: pointer;
+  border-color: black;
   transition: border-color 0.25s;
 }
-button:hover {
+.button:hover {
   border-color: #646cff;
+  background-color: #007bff;
 }
-button:focus,
-button:focus-visible {
+.button:focus,
+.button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
@@ -88,7 +90,7 @@ button:focus-visible {
   flex: 1; /* equal width */
   overflow-y: auto;
   max-height: 90vh; /* prevent overflow */
-  width:800px;
+  width:50%;
 }
 
 /* Specific background color for form card */
@@ -99,9 +101,22 @@ button:focus-visible {
 
 /* Specific background color for preview card */
 .preview-card {
-  background-color: #ffffff;
+  background-color: white;
   color: #333;
 }
+.a4-page {
+  width: 794px;           /* A4 width at 96 DPI */
+  height: 1123px;         /* A4 height at 96 DPI */
+  background: white;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  margin: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding:20px;
+}
+
 @media (max-width: 470px) {
   .app-container {
     flex-direction: column;
