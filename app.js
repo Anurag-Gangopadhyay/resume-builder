@@ -3,7 +3,7 @@ const { useState, useEffect, useRef } = React;
 
 function TemplateSelector({ selected, setSelected }) {
   return (
-    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', position:'absolute' }}>
       <button  className = "button" onClick={() => setSelected('template1')}
         style={{ backgroundColor: selected === 'template1' ? '#007bff' : '#ccc' }}>
         Template 1
@@ -53,6 +53,7 @@ function FormSection({ formData, setFormData }) {
   return (
     <div style={{ maxWidth: '600px', padding: '10px' }}>
       <h2>Resume Builder</h2>
+	  <h3>Personal Information</h3>
       <input name="name" value={formData.name} onChange={handleChange} placeholder="Full Name" style={inputStyle} />
       <input name="email" value={formData.email} onChange={handleChange} placeholder="Email" style={inputStyle} />
       <input name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone" style={inputStyle} />
@@ -160,10 +161,10 @@ function ResumeTemplate2({ formData }) {
         <div style={{ display: 'flex', height: '100%' }}>
           {/* Left Sidebar */}
           <div style={{ width: '40%', backgroundColor: '#333', color: '#fff', padding: '10px', boxSizing: 'border-box' }}>
-            <h2>{name}</h2>
+            <h1>{name}</h1>
             <p>{email}<br />{phone}</p>
-            {skills && (<><h4>Skills</h4><p>{skills}</p></>)}
-            {languages && (<><h4>Languages</h4><p>{languages}</p></>)}
+            {skills && (<><h3>Skills</h3><p>{skills}</p></>)}
+            {languages && (<><h3>Languages</h3><p>{languages}</p></>)}
           </div>
 
           {/* Right Content */}
@@ -227,8 +228,8 @@ function App() {
 
   return (
     <div className="app-container">
-	  <div className="card form-card">
 		<TemplateSelector selected={selectedTemplate} setSelected={setSelectedTemplate} />
+	  <div className="card form-card">
 		<FormSection formData={formData} setFormData={setFormData} />
 	  </div>
 	  <div className="card preview-card">
